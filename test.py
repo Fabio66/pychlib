@@ -46,7 +46,7 @@ class FFNN(nn.Module):
 
 
 #%%
-if __name__ == '__main__':
+def main():
     np.random.seed(42)
     torch.manual_seed(42)
 
@@ -72,23 +72,28 @@ if __name__ == '__main__':
                 avg_loss = total_loss / len(train_ds)
                 print(f"Epoch [{epoch+1}/{epochs}], Loss: {avg_loss:.4f}, Acc:{accuracy:.2f}%")
 
-#%% Inference example
-model.eval()
-with torch.no_grad():
-    test_input = torch.randn(100, 784)
-    prediction = model(test_input)
-    predicted_class = torch.argmax(prediction, dim=1)
-    confidence = torch.softmax(prediction, dim=1)
+    #%% Inference example
+    model.eval()
+    with torch.no_grad():
+        test_input = torch.randn(100, 784)
+        prediction = model(test_input)
+        predicted_class = torch.argmax(prediction, dim=1)
+        confidence = torch.softmax(prediction, dim=1)
 
-    print(f"\nEsempipio di Inferenza:")
-    print(f"Input: {test_input.numpy().flatten()[:5]}...")  # Prime 5 features
-    print(f"Predizione: Classe {predicted_class.item()}")
-    print(f"Confidenza: {confidence.numpy().flatten()}")
+        print(f"\nEsempipio di Inferenza:")
+        print(f"Input: {test_input.numpy().flatten()[:5]}...")  # Prime 5 features
+        print(f"Predizione: Classe {predicted_class.item()}")
+        print(f"Confidenza: {confidence.numpy().flatten()}")
 
-# Informazioni sul modello
-print(f"\nInformazioni modello:")
-print(f"Numero parametri: {sum(p.numel() for p in model.parameters())}")
-print(f"Numero parametri trainable: {sum(p.numel() for p in model.parameters() if p.requires_grad)}")
-# Architettura del modello
-print(f"\nArchitettura:")
-print(model)
+    # Informazioni sul modello
+    print(f"\nInformazioni modello:")
+    print(f"Numero parametri: {sum(p.numel() for p in model.parameters())}")
+    print(f"Numero parametri trainable: {sum(p.numel() for p in model.parameters() if p.requires_grad)}")
+    # Architettura del modello
+    print(f"\nArchitettura:")
+    print(model)
+
+
+#%% RUN MAIN() if this module is run as main
+if __name__ == '__main__':
+    main()
